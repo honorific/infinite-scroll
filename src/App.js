@@ -8,6 +8,7 @@ const App = () => {
 
   const handleSearch = () => {
     setQuery(e.target.value)
+    setPageNumber(1)
   }
 
   return (
