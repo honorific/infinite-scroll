@@ -4,12 +4,14 @@ import useBookSearch from './useBookSearch'
 const App = () => {
   const [query, setQuery] = useState('')
   const [pageNumber, setPageNumber] = useState(1)
-  useBookSearch(query, pageNumber)
 
   const handleSearch = (e) => {
+    console.log(e.target.value)
     setQuery(e.target.value)
     setPageNumber(1)
   }
+
+  useBookSearch(query, pageNumber)
 
   return (
     <>
