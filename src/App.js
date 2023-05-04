@@ -1,7 +1,18 @@
+import {useState} from 'react'
+import useBookSearch from './useBookSearch'
+
 const App = () => {
+  const [query, setQuery] = useState('')
+  const [pageNumber, setPageNumber] = useState(1)
+  useBookSearch(query, pageNumber)
+
+  const handleSearch = () => {
+    setQuery(e.target.value)
+  }
+
   return (
     <>
-      <input type='text' />
+      <input type='text' onChange={handleSearch} />
       <div>Title</div>
       <div>Title</div>
       <div>Title</div>

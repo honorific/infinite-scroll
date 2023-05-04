@@ -7,6 +7,8 @@ const useBookSearch = (query, pageNumber) => {
       method: 'GET',
       url: 'http://openlibrary.org/search.json',
       params: {q: query, page: pageNumber},
+    }).then((res) => {
+      console.log(res.data)
     })
   }, [query, pageNumber])
   return null
