@@ -6,7 +6,7 @@ const App = () => {
   const [pageNumber, setPageNumber] = useState(1)
   useBookSearch(query, pageNumber)
 
-  const handleSearch = () => {
+  const handleSearch = (e) => {
     setQuery(e.target.value)
     setPageNumber(1)
   }
