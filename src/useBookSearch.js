@@ -4,6 +4,8 @@ import {useEffect, useState} from 'react'
 const useBookSearch = (query, pageNumber) => {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(false)
+  const [books, setBooks] = useState([])
+  const [hasMore, setHasMore] = useState(false)
 
   useEffect(() => {
     let cancel
