@@ -18,21 +18,29 @@ const useBookSearch = (query, pageNumber) => {
       cancelToken: new axios.CancelToken((c) => (cancel = c)),
     })
       .then((res) => {
-        console.log(res.data)
+        console.log('res data', res.data)
+
         setBooks((prevBooks) => {
-          return [...new Set([...prevBooks, res.data.docs.map((b) => b.title)])]
+          return [
+            ...new Set([...prevBooks, ...res.data.docs.map((b) => b.title)]),
+          ]
         })
-        console.log('books with titles are: ', books)
+
+        setHasMore(res.data.docs.length > 0)
+        setLoading(false)
       })
       .catch((e) => {
         if (axios.isCancel(e)) return
+        setError(true)
+        console.log('error is', e)
       })
     return () => {
       cancel()
     }
   }, [query, pageNumber])
+  console.log('books after useEffect are: ', books)
 
-  return null
+  return {loading, books, error, hasMore}
 }
 
 export default useBookSearch
