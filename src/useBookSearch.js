@@ -8,6 +8,8 @@ const useBookSearch = (query, pageNumber) => {
   const [hasMore, setHasMore] = useState(false)
 
   useEffect(() => {
+    setLoading(true)
+    setError(false)
     let cancel
     axios({
       method: 'GET',
@@ -17,6 +19,10 @@ const useBookSearch = (query, pageNumber) => {
     })
       .then((res) => {
         console.log(res.data)
+        setBooks((prevBooks) => [
+          ...prevBooks,
+          res.data.docs.map((b) => b.title),
+        ])
       })
       .catch((e) => {
         if (axios.isCancel(e)) return
