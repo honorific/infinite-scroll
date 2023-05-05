@@ -20,8 +20,9 @@ const useBookSearch = (query, pageNumber) => {
       .then((res) => {
         console.log(res.data)
         setBooks((prevBooks) => {
-          return new Set([...prevBooks, res.data.docs.map((b) => b.title)])
+          return [...new Set([...prevBooks, res.data.docs.map((b) => b.title)])]
         })
+        console.log('books with titles are: ', books)
       })
       .catch((e) => {
         if (axios.isCancel(e)) return
