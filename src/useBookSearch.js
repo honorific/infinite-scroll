@@ -2,6 +2,7 @@ import axios from 'axios'
 import {useEffect, useState} from 'react'
 
 const useBookSearch = (query, pageNumber) => {
+  const [loading, setLoading] = useState(true)
   useEffect(() => {
     let cancel
     axios({
