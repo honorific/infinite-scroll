@@ -19,10 +19,9 @@ const useBookSearch = (query, pageNumber) => {
     })
       .then((res) => {
         console.log(res.data)
-        setBooks((prevBooks) => [
-          ...prevBooks,
-          res.data.docs.map((b) => b.title),
-        ])
+        setBooks((prevBooks) => {
+          return new Set([...prevBooks, res.data.docs.map((b) => b.title)])
+        })
       })
       .catch((e) => {
         if (axios.isCancel(e)) return
