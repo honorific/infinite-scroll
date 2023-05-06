@@ -42,7 +42,6 @@ const useBookSearch = (query, pageNumber) => {
       cancel()
     }
   }, [query, pageNumber])
-  console.log('books after useEffect are: ', books)
 
   return {loading, books, error, hasMore}
 }

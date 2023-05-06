@@ -1,9 +1,12 @@
-import {useState} from 'react'
+import {useState, useRef, useCallback} from 'react'
 import useBookSearch from './useBookSearch'
 
 const App = () => {
   const [query, setQuery] = useState('')
   const [pageNumber, setPageNumber] = useState(1)
+
+  const observer = useRef()
+  const lastBookElementRef = useCallback()
 
   const handleSearch = (e) => {
     console.log(e.target.value)
@@ -11,16 +14,22 @@ const App = () => {
     setPageNumber(1)
   }
 
-
   const {loading, books, error, hasMore} = useBookSearch(query, pageNumber)
-  console.log('books are', books)
   useBookSearch(query, pageNumber)
 
   return (
     <>
-      <input type='text' onChange={handleSearch} />
-      {books.map((book) => {
-        return <div key={book}>{book}</div>
+      <input type='text' value={query} onChange={handleSearch} />
+      {books.map((book, index) => {
+        if (books.length === index + 1) {
+          return (
+            <div ref={lastBookElementRef} key={book}>
+              {book}
+            </div>
+          )
+        } else {
+          return <div key={book}>{book}</div>
+        }
       })}
       <div>{loading && 'loading...'}</div>
       <div>{error && 'Error'}</div>
