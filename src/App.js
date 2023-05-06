@@ -5,16 +5,6 @@ const App = () => {
   const [query, setQuery] = useState('')
   const [pageNumber, setPageNumber] = useState(1)
 
-  const observer = useRef()
-  const lastBookElementRef = useCallback((node) => {
-    if (loading) return
-    if (observer.current) {
-      observer.current.disconnect()
-    }
-    //observer.current = new IntersectionObserver()
-    console.log(node)
-  })
-
   const handleSearch = (e) => {
     console.log(e.target.value)
     setQuery(e.target.value)
@@ -23,6 +13,27 @@ const App = () => {
 
   const {loading, books, error, hasMore} = useBookSearch(query, pageNumber)
   useBookSearch(query, pageNumber)
+
+  const observer = useRef()
+  const lastBookElementRef = useCallback(
+    (node) => {
+      if (loading) return
+      if (observer.current) {
+        observer.current.disconnect()
+      }
+      observer.current = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting && hasMore) {
+          console.log('visible')
+          setPageNumber((prev) => prev + 1)
+        }
+      })
+      if (node) {
+        observer.current.observe(node)
+      }
+      console.log(node)
+    },
+    [loading, hasMore],
+  )
 
   return (
     <>
