@@ -6,7 +6,14 @@ const App = () => {
   const [pageNumber, setPageNumber] = useState(1)
 
   const observer = useRef()
-  const lastBookElementRef = useCallback()
+  const lastBookElementRef = useCallback((node) => {
+    if (loading) return
+    if (observer.current) {
+      observer.current.disconnect()
+    }
+    //observer.current = new IntersectionObserver()
+    console.log(node)
+  })
 
   const handleSearch = (e) => {
     console.log(e.target.value)
